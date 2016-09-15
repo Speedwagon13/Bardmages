@@ -9,52 +9,50 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1000010564712354}
+  m_RootGameObject: {fileID: 1000010973397184}
   m_IsPrefabParent: 1
---- !u!1 &1000010564712354
+--- !u!1 &1000010973397184
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 4000013734715378}
-  - 114: {fileID: 114000011396993340}
+  - 4: {fileID: 4000012427353686}
+  - 114: {fileID: 114000012703513154}
   m_Layer: 0
-  m_Name: BubbleTune
+  m_Name: MineTune
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4000013734715378
+--- !u!4 &4000012427353686
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010564712354}
+  m_GameObject: {fileID: 1000010973397184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &114000011396993340
+--- !u!114 &114000012703513154
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010564712354}
+  m_GameObject: {fileID: 1000010973397184}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 592c3effaa6e7464f8b778a724ce5699, type: 3}
+  m_Script: {fileID: 11500000, guid: e4e9febd77991ae41b4521983948b39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tune: 000000000100000001000000
-  spawnObject: {fileID: 1000013446107098, guid: 4f50feffe47de4924a5e2b8e01557502,
+  tune: 0000000001000000020000000200000003000000
+  spawnObject: {fileID: 1000013693565184, guid: 03482f27b28784f4fb3c5a57c51a47b0,
     type: 2}
   tuneProgress: 0
   ownerTransform: {fileID: 0}
-  tuneName: Bubble
-  attach: 1

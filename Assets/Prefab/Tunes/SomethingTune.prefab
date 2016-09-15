@@ -21,7 +21,7 @@ GameObject:
   - 4: {fileID: 4000013734715378}
   - 114: {fileID: 114000011396993340}
   m_Layer: 0
-  m_Name: BubbleTune
+  m_Name: SomethingTune
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,10 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592c3effaa6e7464f8b778a724ce5699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tune: 000000000100000001000000
-  spawnObject: {fileID: 1000013446107098, guid: 4f50feffe47de4924a5e2b8e01557502,
+  tune: 02000000030000000100000001000000000000000100000003000000000000000100000000000000
+  spawnObject: {fileID: 1000011250820186, guid: 2cc7ff14f68b84a0484678cbbeb8657f,
     type: 2}
   tuneProgress: 0
   ownerTransform: {fileID: 0}
-  tuneName: Bubble
-  attach: 1
+  tuneName: Something
+  attach: 0

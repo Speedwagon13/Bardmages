@@ -3,15 +3,18 @@
 /// <summary>
 /// Allows a player to move a bardmage.
 /// </summary>
-public class PlayerControl : BaseControl {
+public class AIControl : BaseControl {
+
+    /// <summary> The direction that the bardmage is moving in. </summary>
+    [HideInInspector]
+    public Vector2 currentDirection = Vector2.zero;
 
     /// <summary>
     /// Gets the directional input to move the bardmage with.
     /// </summary>
     /// <returns>The directional input to move the bardmage with.</returns>
     protected override Vector2 GetDirectionInput() {
-        return new Vector2(ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickX, player),
-            ControllerManager.instance.GetAxis(ControllerInputWrapper.Axis.LeftStickY, player));
+        return currentDirection;
     }
 
     /// <summary>
@@ -19,6 +22,6 @@ public class PlayerControl : BaseControl {
     /// </summary>
     /// <returns>Whether the bardmage turns gradually.</returns>
     protected override bool GetGradualTurn() {
-        return ControllerManager.instance.PlayerControlType(player) == ControllerManager.ControlType.Keyboard;
+        return true;
     }
 }

@@ -54,4 +54,6 @@ MonoBehaviour:
   tune: 000000000300000002000000
   spawnObject: {fileID: 1000013446107098, guid: 0d29b1a30640147df93c7160ddf2447b,
     type: 2}
+  tuneProgress: 0
   ownerTransform: {fileID: 0}
+  tuneName: Snipe

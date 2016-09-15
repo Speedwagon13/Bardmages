@@ -8,13 +8,16 @@ public class LevelManager : MonoBehaviour {
 
 	public PlayerUIController[] playerUI;
 
-	public Dictionary<PlayerID, PlayerControl> playerDict;
+	public Dictionary<PlayerID, BaseControl> playerDict;
 
 	public Dictionary<ControllerInputWrapper.Buttons, float> buttonPitchMap;
 
 	public AudioSource music;
 
 	public bool enableQuarter, enableEighth, enableTriplet;
+
+    /// <summary> Types of rhythms that can be played. </summary>
+    public enum RhythmType { None, Quarter, Eighth, Triplet };
 
 	[SerializeField]
 	private float tempo;
@@ -27,11 +30,18 @@ public class LevelManager : MonoBehaviour {
 	private int beatCounter;
 	private float prevBeat = 0f;
 
-	// Use this for initialization
-	void Start () {
-		instance = this;
-		playerDict = new Dictionary<PlayerID, PlayerControl>();
+    /// <summary>
+    /// Initializes the singleton instance of the level manager.
+    /// </summary>
+    private void Awake() {
+        instance = this;
+        playerDict = new Dictionary<PlayerID, BaseControl>();
+    }
 
+    /// <summary>
+    /// Use this for initialization
+    /// </summary>
+	void Start () {
 		buttonPitchMap = new Dictionary<ControllerInputWrapper.Buttons, float>();
 		buttonPitchMap.Add(ControllerInputWrapper.Buttons.A, 1f);
 		buttonPitchMap.Add(ControllerInputWrapper.Buttons.B, Mathf.Pow(2,2/12f));
@@ -54,7 +64,12 @@ public class LevelManager : MonoBehaviour {
 		yield return null;
 	}
 
-	public float PerfectTiming () {
+    /// <summary>
+    /// Checks how close the current frame is to the beat.
+    /// </summary>
+    /// <returns>A percentage of how close the current frame is to the beat.</returns>
+    /// <param name="rhythmType">A type of rhythm to constrain the beat to.</param>
+    public float PerfectTiming (RhythmType rhythmType = RhythmType.None) {
 		float calcTempo = 60f/BPM;
 
 		float val = 2f;
@@ -71,12 +86,18 @@ public class LevelManager : MonoBehaviour {
 
 		if(enableQuarter) {
 			result = quarterAccuracy;
+            if (rhythmType == RhythmType.Quarter) {
+                return result;
+            }
 		}
 		if(enableEighth) {
-			result = Mathf.Max(result,eighthAccuracy);
+            result = Mathf.Max(result,eighthAccuracy);
+            if (rhythmType == RhythmType.Eighth) {
+                return result;
+            }
 		}
 		if(enableTriplet) {
-			result = Mathf.Max(result,tripletAccuracy);
+            result = Mathf.Max(result,tripletAccuracy);
 		}
 
 		return result;
@@ -99,4 +120,21 @@ public class LevelManager : MonoBehaviour {
 	public float Tempo {
 		get { return tempo;	}
 	}
+
+    /// <summary> The currently enabled rhythms, in order of slowest to fastest. </summary>
+    public List<RhythmType> EnabledRhythms {
+        get {
+            List<RhythmType> rhythmTypes = new List<RhythmType>(3);
+            if (enableQuarter) {
+                rhythmTypes.Add(RhythmType.Quarter);
+            }
+            if (enableEighth) {
+                rhythmTypes.Add(RhythmType.Eighth);
+            }
+            if (enableTriplet) {
+                rhythmTypes.Add(RhythmType.Triplet);
+            }
+            return rhythmTypes;
+        }
+    }
 }

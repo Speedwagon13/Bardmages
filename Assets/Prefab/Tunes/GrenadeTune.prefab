@@ -54,4 +54,6 @@ MonoBehaviour:
   tune: 0300000003000000000000000200000003000000
   spawnObject: {fileID: 1000013446107098, guid: 3faad504a4964442e993409a5c2b65e4,
     type: 2}
+  tuneProgress: 0
   ownerTransform: {fileID: 0}
+  tuneName: Grenade
