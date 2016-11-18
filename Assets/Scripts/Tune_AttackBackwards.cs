@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Tune_AttackBackwards : Tune
+public class Tune_AttackBackwards : Tune_Attack
 {
-    public override void TuneComplete(bool crit)
+    /// <summary>
+    /// Gets the position where the tune object will spawn at.
+    /// </summary>
+    /// <returns>The position where the tune object will spawn at.</returns>
+    protected override Vector3 GetSpawnPosition ()
     {
-        base.TuneComplete(crit);
-
-        GameObject temp = (GameObject)GameObject.Instantiate(spawnObject, ownerTransform.position + -ownerTransform.forward * 2f, ownerTransform.rotation);
-        temp.GetComponent<Attack>().agressor = ownerTransform.GetComponent<PlayerControl>().player;
-        temp.GetComponent<Spawnable>().Crit(crit);
+        return ownerTransform.position + -ownerTransform.forward * 2f;
     }
 }

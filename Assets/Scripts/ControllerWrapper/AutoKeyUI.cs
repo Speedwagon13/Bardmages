@@ -42,8 +42,6 @@ public class AutoKeyUI : MonoBehaviour {
 		prevID = id;
 		prevControlType = ControllerManager.instance.PlayerControlType(id);
 
-		if(ControllerManager.instance.PlayerControlType(id) == ControllerManager.ControlType.Keyboard) transform.GetChild(0).GetComponent<Text>().enabled = true;
-
 		switch(type) {
 		case Type.Axis:
 			switch(axis) {
@@ -106,7 +104,6 @@ public class AutoKeyUI : MonoBehaviour {
 				case ControllerManager.ControlType.Keyboard:
 					if(uiImage) {
 						GetComponent<Image>().sprite = LevelControllerManager.instance.KEY_A;
-						transform.GetChild(0).GetComponent<Text>().text = "K";
 					} else {
 						GetComponent<SpriteRenderer>().sprite = LevelControllerManager.instance.KEY_A;
 					}
@@ -132,7 +129,6 @@ public class AutoKeyUI : MonoBehaviour {
 				case ControllerManager.ControlType.Keyboard:
 					if(uiImage) {
 						GetComponent<Image>().sprite = LevelControllerManager.instance.KEY_B;
-						transform.GetChild(0).GetComponent<Text>().text = "L";
 					} else {
 						GetComponent<SpriteRenderer>().sprite = LevelControllerManager.instance.KEY_B;
 					}
@@ -259,7 +255,6 @@ public class AutoKeyUI : MonoBehaviour {
 				case ControllerManager.ControlType.Keyboard:
 					if(uiImage) {
 						GetComponent<Image>().sprite = LevelControllerManager.instance.KEY_X;
-						transform.GetChild(0).GetComponent<Text>().text = "J";
 					} else {
 						GetComponent<SpriteRenderer>().sprite = LevelControllerManager.instance.KEY_X;
 					}
@@ -285,7 +280,6 @@ public class AutoKeyUI : MonoBehaviour {
 				case ControllerManager.ControlType.Keyboard:
 					if(uiImage) {
 						GetComponent<Image>().sprite = LevelControllerManager.instance.KEY_Y;
-						transform.GetChild(0).GetComponent<Text>().text = "I";
 					} else {
 						GetComponent<SpriteRenderer>().sprite = LevelControllerManager.instance.KEY_Y;
 					}

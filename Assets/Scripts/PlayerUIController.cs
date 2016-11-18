@@ -22,8 +22,8 @@ public class PlayerUIController : MonoBehaviour {
     /// <summary>
     /// Initializes UI fields to track the player.
     /// </summary>
-	public void SetupUI () {
-		tunes = LevelManager.instance.playerDict[player].GetComponent<BaseBard>().tunes;
+	public virtual void SetupUI () {
+		tunes = Assets.Scripts.Data.Data.Instance.GetPlayerTunes(player);
 		tune1Keys = new Image[tunes[0].tune.Length];
 		tune2Keys = new Image[tunes[1].tune.Length];
 		tune3Keys = new Image[tunes[2].tune.Length];
@@ -78,9 +78,9 @@ public class PlayerUIController : MonoBehaviour {
 			circle.localScale = Vector3.one*(1+LevelManager.instance.BeatValue(0));
 	}
 
-	public void TuneProgressed(Tune t) {
+	public virtual void TuneProgressed(Tune t) {
 		for(int i = 0; i < tunes.Length; i++) {
-			if(tunes[i].Equals(t)) {
+			if(tunes[i].tuneName.Equals(t.tuneName)) {
 				StopCoroutine(ResetTuneTimer(i));
 				StartCoroutine(ResetTuneTimer(i));
 				StopCoroutine(ProgressTuneAnim(i+1,t.tuneProgress));
@@ -89,7 +89,7 @@ public class PlayerUIController : MonoBehaviour {
 		}
 	}
 
-	public void TuneReset() {
+	public virtual void TuneReset() {
 		StopAllCoroutines();
 		for(int i = 0; i < tune1Keys.Length; i++) {
 			tune1Keys[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(rightSideUI ? 30 + 40*i : -(30 + 40*i),0f);
@@ -137,25 +137,29 @@ public class PlayerUIController : MonoBehaviour {
 
 		while(animatePressedButton < 1f) {
 			animatePressedButton += Time.deltaTime;
-			tuneKeys[index].transform.localScale = Vector3.one*(animatePressedButton+1);
-			tuneKeys[index].color = new Color(1,1,1,1-animatePressedButton);
-			for(int i = index + 1; i < tuneKeys.Length; i++) {
-				tuneKeys[i].GetComponent<RectTransform>().anchoredPosition =
-					Vector2.Lerp(tuneKeys[i].GetComponent<RectTransform>().anchoredPosition,
-						new Vector2(rightSideUI ? 30 + 40*(i-(index+1)) : -(30 + 40*(i-(index+1))),0f), animatePressedButton);
-				tuneKeys[i].color = new Color(1,1,1,1-((float)(i-(index+1))/(float)tuneKeys.Length));
-			}
+            if (index < tuneKeys.Length) {
+    			tuneKeys[index].transform.localScale = Vector3.one*(animatePressedButton+1);
+    			tuneKeys[index].color = new Color(1,1,1,1-animatePressedButton);
+    			for(int i = index + 1; i < tuneKeys.Length; i++) {
+    				tuneKeys[i].GetComponent<RectTransform>().anchoredPosition =
+    					Vector2.Lerp(tuneKeys[i].GetComponent<RectTransform>().anchoredPosition,
+    						new Vector2(rightSideUI ? 30 + 40*(i-(index+1)) : -(30 + 40*(i-(index+1))),0f), animatePressedButton);
+    				tuneKeys[i].color = new Color(1,1,1,1-((float)(i-(index+1))/(float)tuneKeys.Length));
+    			}
+            }
 			yield return new WaitForEndOfFrame();
 		}
 			
 		yield return null;
 	}
 
-	public void UpdateHealth(float amount, bool died) {
+	public virtual void UpdateHealth(float amount, bool died) {
 		if(healthBar) {
 			healthBar.fillAmount = amount;
-			deaths++;
-			if(died) deathCounter.text = deaths.ToString();
+            if(died) {
+                deaths++;
+                deathCounter.text = deaths.ToString();
+            }
 		}
 	}
 

@@ -56,3 +56,8 @@ MonoBehaviour:
     type: 2}
   tuneProgress: 0
   ownerTransform: {fileID: 0}
+  tuneName: Mine
+  tuneDescription: Regular\n+ Heal yourself for 10% \n\nCrit\n+ Heal yourself for
+    25%
+  maxDistance: Infinity
+  minDistance: 0

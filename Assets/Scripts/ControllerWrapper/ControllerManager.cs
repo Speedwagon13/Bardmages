@@ -27,7 +27,7 @@ public class ControllerManager  {
 
 	public void ClearPlayers()
 	{
-		playerControls = new Dictionary<PlayerID, ControllerInputWrapper>();
+        playerControls = new Dictionary<PlayerID, ControllerInputWrapper>();
 	}
 
 	public int NumPlayers {
@@ -52,13 +52,13 @@ public class ControllerManager  {
 	}
 
 	public void ResetInputs() {
-		playerControls = new Dictionary<PlayerID, ControllerInputWrapper>();
-	}
+        ClearPlayers();
+    }
 
 	public bool AddPlayer(ControllerInputWrapper.Buttons connectCode) {
 		KeyboardWrapper kw = new KeyboardWrapper(-1);
 		if(!playerControls.ContainsValue(kw) && kw.GetButton(connectCode)) {
-			for(int j = 1; j < 5; j++) {
+			for(int j = playerControls.Count+1; j < 5; j++) {
 				if(!playerControls.ContainsKey((PlayerID)j)) {
 					RegisterPlayerController(j, kw);
 					return true;
@@ -70,7 +70,7 @@ public class ControllerManager  {
 			for (int i = 0; i < controllerNames.Length; i++) {
 				ControllerInputWrapper ciw = GetControllerType(i);
 				if(ciw != null && !playerControls.ContainsValue(ciw) && ciw.GetButton(connectCode)) {
-					for(int j = 1; j < 5; j++) {
+					for(int j = playerControls.Count+1; j < 5; j++) {
 						if(!playerControls.ContainsKey((PlayerID)j)) {
 							RegisterPlayerController(j, ciw);
 							return true;
@@ -89,37 +89,35 @@ public class ControllerManager  {
 	/// <param name="id">The ID of the player being registered. </param>
 	/// <param name="ciw">The controller being registered. </param>
 	private void RegisterPlayerController(int id, ControllerInputWrapper ciw) {
-		if (IsAllAI()) {
-			for (int i = NumPlayers; i > 0; i--) {
-				PlayerID currentID = (PlayerID)i;
-				ControllerInputWrapper controller = playerControls[currentID];
-				playerControls.Remove(currentID);
-				if (i < 4) {
-					playerControls.Add((PlayerID)(i + 1), controller);
-				}
-			}
-			id = 1;
-		}
+//		if (IsAllAI()) {
+//			for (int i = NumPlayers; i > 0; i--) {
+//				PlayerID currentID = (PlayerID)i;
+//				ControllerInputWrapper controller = playerControls[currentID];
+//				playerControls.Remove(currentID);
+//				if (i < 4) {
+//					playerControls.Add((PlayerID)(i + 1), controller);
+//                }
+//			}
+//			id = 1;
+//		}
 		playerControls.Add((PlayerID)(id), ciw);
 		Debug.Log((PlayerID)(id) + ": " + ciw + " added");
 	}
 
 	/// <summary>
-	/// Adds an AI controller to the game.
+	/// Adds and AI to the controller manager
 	/// </summary>
-	/// <returns>Whether the AI controller was successfully added.</returns>
-	public bool AddAI(ControllerInputWrapper.Buttons connectCode) {
+	/// <returns><c>true</c>, if AI was added, <c>false</c> otherwise.</returns>
+	/// <param name="check">Use GetButtonDown as a parameter for connect code.</param>
+	public bool AddAI(bool check) {
 		if (playerControls.Count < 4) {
-			foreach(KeyValuePair<PlayerID, ControllerInputWrapper> kvp in ControllerManager.instance.playerControls) {
-				ControllerInputWrapper ciw = kvp.Value;
-				if (ciw != null && ciw.GetButton(connectCode)) {
-					for (int j = 1; j < 5; j++) {
-						if (!playerControls.ContainsKey((PlayerID)j)) {
-							AIWrapper aiw = new AIWrapper(-2);
-							playerControls.Add((PlayerID)(j), aiw);
-							Debug.Log((PlayerID)(j) + ": " + aiw + " added");
-							return true;
-						}
+			if (check) {
+				for (int j = playerControls.Count + 1; j < 5; j++) {
+					if (!playerControls.ContainsKey((PlayerID)j)) {
+						AIWrapper aiw = new AIWrapper(-2);
+						playerControls.Add((PlayerID)(j), aiw);
+						Debug.Log((PlayerID)(j) + ": " + aiw + " added");
+						return true;
 					}
 				}
 			}
@@ -146,11 +144,11 @@ public class ControllerManager  {
 	/// </summary>
 	/// <returns>The index of the AI player that was removed.</returns>
 	/// <param name="removalButton">The button that needs to be pressed to remove an AI.</param>
-	public int AllowAIRemoval(ControllerInputWrapper.Buttons removalButton) {
+	public int AllowAIRemoval(bool check) {
 		PlayerID playerToRemove = PlayerID.None;
 		bool removing = false;
 		foreach(KeyValuePair<PlayerID, ControllerInputWrapper> kvp in playerControls) {
-			if(kvp.Value.GetButton(removalButton)) {
+			if(check) {
 				removing = true;
 				break;
 			}

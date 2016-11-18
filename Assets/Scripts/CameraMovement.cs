@@ -11,29 +11,54 @@ public class CameraMovement : MonoBehaviour {
 
 	private float initialFOV;
 
+	private float startingSlow;
+
 	// Use this for initialization
 	void Start () {
-		offset = transform.position;
+		offset = new Vector3(0f,60f,-30f);
 		initialFOV = GetComponent<Camera>().fieldOfView;
 		lookPosition = Vector3.zero;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if(startingSlow < 1f) startingSlow += Time.deltaTime/4f;
+
 		Vector3 averagePosition = Vector3.zero;
 
-		foreach(Transform t in targets) {
-			averagePosition += t.position;
+		int numDead = 0;
+		float maxDistance = 0f;
+
+		for(int i = 0; i < 4; i++) {
+			for(int j = 0; j < 4; j++) {
+				if(targets[i].GetComponent<PlayerLife>().Alive && targets[j].GetComponent<PlayerLife>().Alive) {
+					if(Vector3.Distance(targets[i].position,targets[j].position) > maxDistance) {
+						maxDistance = Vector3.Distance(targets[i].position,targets[j].position);
+					}
+				}
+			}
 		}
 
-		averagePosition /= targets.Length;
+		foreach(Transform t in targets) {
+            if(t.gameObject.activeSelf && t.GetComponent<PlayerLife>().Alive) {
+				averagePosition += t.position;
+			} else {
+				numDead++;
+			}
+		}
+
+        if (targets.Length <= numDead) {
+            return;
+        }
+
+		averagePosition /= (targets.Length - numDead);
 
 		GetComponent<Camera>().fieldOfView = LevelManager.instance.BeatValue(0f)/2f + initialFOV;
 		transform.GetChild(0).GetComponent<Camera>().fieldOfView = LevelManager.instance.BeatValue(0f)/2f + initialFOV;
 
-		transform.localPosition = Vector3.MoveTowards(transform.localPosition,averagePosition + offset, Time.deltaTime*Vector3.Distance(transform.localPosition,averagePosition + offset)/2f);
+		transform.localPosition = Vector3.MoveTowards(transform.localPosition,averagePosition + offset*(maxDistance/35f), Time.deltaTime*Vector3.Distance(transform.localPosition,averagePosition + offset*(maxDistance/35f))/2f);
 		lookPosition = Vector3.MoveTowards(lookPosition,averagePosition,Time.deltaTime*Vector3.Distance(lookPosition,averagePosition));
-		transform.LookAt(lookPosition);
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lookPosition - transform.position), Time.deltaTime*Quaternion.Angle(transform.rotation, Quaternion.LookRotation(lookPosition - transform.position))*startingSlow);
 
 	}
 }

@@ -17,4 +17,9 @@ public interface Spawnable {
 	/// <param name="owner">Owner.</param>
 	void Owner(PlayerID owner);
 
+    /// <summary> The tune that spawned this object. </summary>
+    Tune tune {
+        get;
+        set;
+    }
 }

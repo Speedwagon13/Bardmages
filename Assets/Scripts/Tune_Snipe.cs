@@ -12,7 +12,9 @@ public class Tune_Snipe : Tune {
 		base.TuneComplete (crit);
 
 		GameObject temp = (GameObject)GameObject.Instantiate(spawnObject,ownerTransform.position + ownerTransform.forward*2f, ownerTransform.rotation);
-		temp.GetComponent<Attack>().agressor = ownerTransform.GetComponent<BaseControl>().player;
+        Attack attack = temp.GetComponent<Attack>();
+        attack.agressor = ownerTransform.GetComponent<BaseControl>().playerOwner;
+        attack.tune = this;
 		temp.GetComponent<TrailRenderer>().material.color = Color.red;
 		temp.transform.GetChild(1).GetComponent<ParticleSystem>().startColor = Color.red;
 		temp.transform.GetChild(0).GetComponent<ParticleSystem>().startColor = Color.red;

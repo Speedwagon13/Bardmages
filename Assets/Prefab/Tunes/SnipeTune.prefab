@@ -57,3 +57,7 @@ MonoBehaviour:
   tuneProgress: 0
   ownerTransform: {fileID: 0}
   tuneName: Snipe
+  tuneDescription: Regular\n+ Heal yourself for 10% \n\nCrit\n+ Heal yourself for
+    25%
+  maxDistance: Infinity
+  minDistance: 0

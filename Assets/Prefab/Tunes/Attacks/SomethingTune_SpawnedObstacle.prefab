@@ -25,7 +25,7 @@ GameObject:
   - 54: {fileID: 54000012174959072}
   m_Layer: 0
   m_Name: SomethingTune_SpawnedObstacle
-  m_TagString: Untagged
+  m_TagString: TuneSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

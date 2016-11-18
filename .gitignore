@@ -30,3 +30,8 @@ ProjectSettings/ProjectSettings.asset
 ProjectSettings/ProjectVersion.txt
 
 *.DS_Store
+./*/*/LightingData.asset
+
+Assets/Scene/MenuTest/LightingData.asset
+
+Assets/Bardmages Temple/Temple Tunes/LightingData.asset

@@ -4,4 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scene/MenuTest.unity
+  - enabled: 1
+    path: Assets/Scene/Load.unity
+  - enabled: 1
+    path: Assets/Bardmages Farm/Farm Phonics.unity
+  - enabled: 1
+    path: Assets/Bardmages Temple/Temple Tunes.unity
+  - enabled: 1
+    path: Assets/Scene/Rooftop Rhythms.unity
+  - enabled: 1
+    path: Assets/Scene/Trippy Trebles.unity

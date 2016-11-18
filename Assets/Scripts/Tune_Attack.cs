@@ -13,9 +13,19 @@ public class Tune_Attack : Tune {
 	{
 		base.TuneComplete (crit);
 
-		GameObject temp = (GameObject)GameObject.Instantiate(spawnObject,ownerTransform.position + ownerTransform.forward*2f, ownerTransform.rotation);
-		temp.GetComponent<Attack>().agressor = ownerTransform.GetComponent<BaseControl>().player;
+        GameObject temp = (GameObject)GameObject.Instantiate(spawnObject, GetSpawnPosition(), ownerTransform.rotation);
+        Attack attack = temp.GetComponent<Attack>();
+		attack.agressor = ownerTransform.GetComponent<BaseControl>().playerOwner;
+        attack.tune = this;
 		temp.GetComponent<Spawnable>().Crit(crit);
 	}
 
+    /// <summary>
+    /// Gets the position where the tune object will spawn at.
+    /// </summary>
+    /// <returns>The position where the tune object will spawn at.</returns>
+    protected virtual Vector3 GetSpawnPosition ()
+    {
+        return ownerTransform.position + ownerTransform.forward * 2f;
+    }
 }

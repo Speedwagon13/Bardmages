@@ -21,12 +21,10 @@ public class SnipeAttack : Attack {
 			}
 		}
 		if(sphereCast) {
-			bool sphereHit = false;
 			Collider[] cols = Physics.OverlapSphere(transform.position + transform.forward*10f,10f);
 			foreach(Collider c in cols) {
-                if(c.transform.root.GetComponent<BaseControl>() && this.agressor != c.transform.root.GetComponent<BaseControl>().player) {
+                if(c.transform.root.GetComponent<BaseControl>() && this.agressor != c.transform.root.GetComponent<BaseControl>().playerOwner) {
 					GetComponent<Rigidbody>().AddForce(((c.transform.root.position - transform.position) - transform.forward*2f).normalized*1000f, ForceMode.Acceleration);
-					sphereHit = true;
 				}
 			}
 		}
